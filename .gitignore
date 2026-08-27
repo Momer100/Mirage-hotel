@@ -18,4 +18,4 @@
 npm-debug.log*
 
 # local editor/agent settings
-.claude/settings.local.json
+/.claude/

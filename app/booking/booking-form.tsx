@@ -2,17 +2,26 @@
 
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, type UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { CheckCircle2, Loader2, PartyPopper } from "lucide-react";
+import { type DateRange } from "react-day-picker";
+import { CalendarDays, CheckCircle2, Loader2, PartyPopper } from "lucide-react";
 
+import { cn } from "@/lib/utils";
 import { bookingSchema, type BookingFormInput } from "@/lib/booking-schema";
 import { roomTypes } from "@/lib/rooms";
 import { siteConfig } from "@/lib/site-config";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -30,8 +39,169 @@ import {
 } from "@/components/ui/form";
 import { OrnamentFrame } from "@/components/site/ornament";
 
-function todayISO() {
-  return new Date().toISOString().slice(0, 10);
+// Format a Date as a local yyyy-mm-dd string. Uses the local calendar day
+// (not toISOString, which shifts to UTC and can roll the date back a day).
+function toISODate(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+// Parse a yyyy-mm-dd string into a local-midnight Date (avoids UTC drift).
+function fromISODate(value?: string) {
+  if (!value) return undefined;
+  const [year, month, day] = value.split("-").map(Number);
+  if (!year || !month || !day) return undefined;
+  return new Date(year, month - 1, day);
+}
+
+const rangeFormatter = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+
+function formatRange(from: Date, to: Date) {
+  return `${rangeFormatter.format(from)} → ${rangeFormatter.format(to)}`;
+}
+
+// Show two months side by side on wider screens, one on mobile.
+function useResponsiveMonths() {
+  const [months, setMonths] = React.useState(1);
+  React.useEffect(() => {
+    const query = window.matchMedia("(min-width: 640px)");
+    const update = () => setMonths(query.matches ? 2 : 1);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  return months;
+}
+
+function StayDatesField({ form }: { form: UseFormReturn<BookingFormInput> }) {
+  const [open, setOpen] = React.useState(false);
+  const numberOfMonths = useResponsiveMonths();
+
+  const checkIn = form.watch("checkIn");
+  const checkOut = form.watch("checkOut");
+
+  const committed = React.useMemo<DateRange | undefined>(() => {
+    const from = fromISODate(checkIn);
+    if (!from) return undefined;
+    return { from, to: fromISODate(checkOut) };
+  }, [checkIn, checkOut]);
+
+  const [draft, setDraft] = React.useState<DateRange | undefined>(committed);
+
+  // Re-sync the in-popover draft with the committed value each time it opens.
+  React.useEffect(() => {
+    if (open) setDraft(committed);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const today = React.useMemo(() => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }, []);
+
+  const errors = form.formState.errors;
+  const dateError = (errors.checkOut?.message ?? errors.checkIn?.message) as
+    | string
+    | undefined;
+
+  const nights =
+    draft?.from && draft?.to
+      ? Math.round((draft.to.getTime() - draft.from.getTime()) / 86_400_000)
+      : 0;
+  const canApply = Boolean(draft?.from && draft?.to && nights >= 1);
+
+  function apply() {
+    if (!draft?.from || !draft?.to) return;
+    form.setValue("checkIn", toISODate(draft.from), {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    form.setValue("checkOut", toISODate(draft.to), {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    setOpen(false);
+  }
+
+  function clear() {
+    setDraft(undefined);
+    form.setValue("checkIn", "", { shouldValidate: false });
+    form.setValue("checkOut", "", { shouldValidate: false });
+  }
+
+  return (
+    <div className="grid gap-2">
+      <Label className={cn(dateError && "text-error")}>Your stay</Label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            aria-invalid={Boolean(dateError)}
+            className={cn(
+              "flex h-11 w-full items-center gap-3 rounded-sm border border-hairline bg-ink-elevated/60 px-4 text-left text-sm outline-none transition-colors",
+              "hover:border-gold/50 focus-visible:border-gold focus-visible:ring-1 focus-visible:ring-gold",
+              "aria-invalid:border-error aria-invalid:ring-error"
+            )}
+          >
+            <CalendarDays className="size-4 shrink-0 text-gold opacity-80" />
+            {committed?.from && committed?.to ? (
+              <span className="text-ivory">
+                {formatRange(committed.from, committed.to)}
+              </span>
+            ) : (
+              <span className="text-ivory-dim/50">
+                Select your check-in and check-out dates
+              </span>
+            )}
+          </button>
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="max-w-[calc(100vw-2rem)]"
+        >
+          <Calendar
+            mode="range"
+            numberOfMonths={numberOfMonths}
+            selected={draft}
+            onSelect={(range) => setDraft(range)}
+            disabled={{ before: today }}
+            defaultMonth={committed?.from ?? today}
+          />
+          <div className="flex items-center justify-between gap-3 border-t border-hairline px-4 py-3">
+            <p className="text-xs text-ivory-dim">
+              {canApply
+                ? `${nights} night${nights === 1 ? "" : "s"} selected`
+                : "Pick your dates"}
+            </p>
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={clear}
+                disabled={!draft?.from}
+              >
+                Clear
+              </Button>
+              <Button type="button" size="sm" onClick={apply} disabled={!canApply}>
+                Apply
+              </Button>
+            </div>
+          </div>
+        </PopoverContent>
+      </Popover>
+      {dateError ? (
+        <p className="text-xs font-medium text-error">{dateError}</p>
+      ) : null}
+    </div>
+  );
 }
 
 export function BookingForm() {
@@ -175,34 +345,7 @@ export function BookingForm() {
             )}
           />
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="checkIn"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Check-in</FormLabel>
-                  <FormControl>
-                    <Input type="date" min={todayISO()} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="checkOut"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Check-out</FormLabel>
-                  <FormControl>
-                    <Input type="date" min={todayISO()} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <StayDatesField form={form} />
 
           <div className="grid gap-6 sm:grid-cols-3">
             <FormField
