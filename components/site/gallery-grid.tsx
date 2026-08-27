@@ -2,15 +2,13 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Camera, Expand } from "lucide-react";
+import { Expand } from "lucide-react";
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
 
 export type GalleryImage = {
   src: string;
   alt: string;
-  tall?: boolean;
 };
 
 export function GalleryGrid({ images }: { images: GalleryImage[] }) {
@@ -18,16 +16,16 @@ export function GalleryGrid({ images }: { images: GalleryImage[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+      {/* Uniform square grid. Tiles fully fill their box (no black space under
+          any image) and 2- or 4-column layouts tile a multiple-of-4 image set
+          with no gaps or ragged edges. */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {images.map((img) => (
           <button
             key={img.src}
             type="button"
             onClick={() => setActive(img)}
-            className={cn(
-              "group relative overflow-hidden border border-hairline outline-none focus-visible:border-gold",
-              img.tall ? "row-span-2 aspect-[3/5]" : "aspect-square"
-            )}
+            className="group relative aspect-square overflow-hidden border border-hairline outline-none focus-visible:border-gold"
           >
             <Image
               src={img.src}
@@ -60,16 +58,5 @@ export function GalleryGrid({ images }: { images: GalleryImage[] }) {
         </DialogContent>
       </Dialog>
     </>
-  );
-}
-
-export function ComingSoonTile({ label = "More photos coming soon" }: { label?: string }) {
-  return (
-    <div className="flex aspect-square flex-col items-center justify-center gap-3 border border-dashed border-hairline bg-ink-elevated/30 text-center">
-      <Camera className="size-5 text-gold/70" />
-      <span className="max-w-[10rem] text-xs uppercase tracking-[0.1em] text-ivory-dim/70">
-        {label}
-      </span>
-    </div>
   );
 }

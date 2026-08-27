@@ -6,7 +6,7 @@ import { GalleryClient } from "./gallery-client";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Browse photos of Mirage Hotel's rooms and interiors, plus a look at Blackpool's Promenade, Tower and Illuminations nearby.",
+    "Browse photos of Mirage Hotel's rooms, guest lounge and interior details in the heart of Blackpool.",
 };
 
 export default function GalleryPage() {

@@ -94,11 +94,11 @@ function StayDatesField({ form }: { form: UseFormReturn<BookingFormInput> }) {
 
   const [draft, setDraft] = React.useState<DateRange | undefined>(committed);
 
-  // Re-sync the in-popover draft with the committed value each time it opens.
-  React.useEffect(() => {
-    if (open) setDraft(committed);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  // Reset the in-popover draft to the committed value each time it opens.
+  function handleOpenChange(next: boolean) {
+    if (next) setDraft(committed);
+    setOpen(next);
+  }
 
   const today = React.useMemo(() => {
     const date = new Date();
@@ -139,15 +139,14 @@ function StayDatesField({ form }: { form: UseFormReturn<BookingFormInput> }) {
   return (
     <div className="grid gap-2">
       <Label className={cn(dateError && "text-error")}>Your stay</Label>
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
           <button
             type="button"
-            aria-invalid={Boolean(dateError)}
             className={cn(
               "flex h-11 w-full items-center gap-3 rounded-sm border border-hairline bg-ink-elevated/60 px-4 text-left text-sm outline-none transition-colors",
               "hover:border-gold/50 focus-visible:border-gold focus-visible:ring-1 focus-visible:ring-gold",
-              "aria-invalid:border-error aria-invalid:ring-error"
+              dateError && "border-error ring-1 ring-error"
             )}
           >
             <CalendarDays className="size-4 shrink-0 text-gold opacity-80" />
