@@ -10,7 +10,7 @@ export function DirectorSection() {
         <OrnamentFrame className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden border border-hairline p-2.5 lg:mx-0">
           <div className="relative h-full w-full overflow-hidden">
             <Image
-              src="/images/hotel/director-john-najdad.jpg"
+              src="/images/hotel/director.png"
               alt="Dr. John Najdad, Managing Director of Mirage Hotel"
               fill
               sizes="(min-width: 1024px) 380px, 90vw"
