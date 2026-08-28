@@ -90,9 +90,15 @@ export default function RoomsPage() {
                 </ul>
 
                 <div className="mt-8 flex flex-wrap items-center gap-6">
-                  <span className="font-display text-2xl text-gold">
-                    {room.priceFrom ? `From £${room.priceFrom} / night` : "Rates on request"}
-                  </span>
+                  {room.priceFrom ? (
+                    <span className="whitespace-nowrap font-display text-2xl text-gold">
+                      From £{room.priceFrom} / night
+                    </span>
+                  ) : (
+                    <span className="whitespace-nowrap font-accent text-xl italic text-gold">
+                      Rates on request
+                    </span>
+                  )}
                   <Button asChild size="lg">
                     <Link href={`/booking?room=${room.slug}`}>Book This Room</Link>
                   </Button>

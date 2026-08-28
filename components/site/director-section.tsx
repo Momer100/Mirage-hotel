@@ -6,14 +6,14 @@ import { Eyebrow, OrnamentFrame } from "@/components/site/ornament";
 export function DirectorSection() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24 sm:py-28 lg:px-10">
-      <div className="grid items-center gap-14 lg:grid-cols-[380px_1fr] lg:gap-20">
-        <OrnamentFrame className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden border border-hairline p-2.5 lg:mx-0">
+      <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
+        <OrnamentFrame className="relative aspect-[3/2] w-full overflow-hidden border border-hairline p-2.5">
           <div className="relative h-full w-full overflow-hidden">
             <Image
               src="/images/hotel/director.png"
-              alt="Dr. John Najdad, Managing Director of Mirage Hotel"
+              alt="Dr. John Najdad, Managing Director of Mirage Hotel, in the hotel lobby"
               fill
-              sizes="(min-width: 1024px) 380px, 90vw"
+              sizes="(min-width: 1024px) 580px, 90vw"
               className="object-cover"
             />
           </div>

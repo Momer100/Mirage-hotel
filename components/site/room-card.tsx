@@ -39,11 +39,18 @@ export function RoomCard({ room, priority = false }: { room: RoomType; priority?
 
         <p className="flex-1 text-sm leading-relaxed text-ivory-dim">{room.description}</p>
 
-        <div className="flex items-center justify-between gap-3 pt-2">
-          <span className="font-display text-lg text-gold">
-            {room.priceFrom ? `From £${room.priceFrom}/night` : "Rates on request"}
-          </span>
-          <Button asChild variant="outline" size="sm">
+        <div className="mt-auto border-t border-hairline/50 pt-4">
+          {room.priceFrom ? (
+            <p className="whitespace-nowrap font-display text-lg text-gold">
+              From £{room.priceFrom}
+              <span className="text-sm text-ivory-dim"> / night</span>
+            </p>
+          ) : (
+            <p className="whitespace-nowrap font-accent text-base italic text-gold">
+              Rates on request
+            </p>
+          )}
+          <Button asChild variant="outline" size="sm" className="mt-3 w-full">
             <Link href={`/booking?room=${room.slug}`}>Book This Room</Link>
           </Button>
         </div>
