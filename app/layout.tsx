@@ -23,7 +23,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://miragehotelblackpool.co.uk"),
+  metadataBase: new URL("https://www.miragehotel.co.uk"),
   title: {
     default: `${siteConfig.name} | Luxury Boutique Hotel, Blackpool`,
     template: `%s | ${siteConfig.name}`,
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${siteConfig.name} | Luxury Boutique Hotel, Blackpool`,
     description: siteConfig.description,
-    url: "https://miragehotelblackpool.co.uk",
+    url: "https://www.miragehotel.co.uk",
     siteName: siteConfig.name,
     locale: "en_GB",
     type: "website",
