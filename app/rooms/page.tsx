@@ -6,22 +6,28 @@ import { Users, BedDouble, Check } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { OrnamentFrame, GoldDivider, Eyebrow } from "@/components/site/ornament";
 import { Button } from "@/components/ui/button";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema, roomsItemListSchema } from "@/lib/structured-data";
 import { roomTypes } from "@/lib/rooms";
 
 export const metadata: Metadata = {
   title: "Our Rooms",
   description:
     "Double, Triple and Family rooms at Mirage Hotel, Blackpool — twelve individually dressed rooms, each with tea & coffee, Freeview TV and free Wi-Fi.",
+  alternates: { canonical: "/rooms" },
 };
 
 export default function RoomsPage() {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Our Rooms", path: "/rooms" }])} />
+      <JsonLd data={roomsItemListSchema} />
       <PageHero
         eyebrow="Accommodation"
         title="Our Rooms"
         subtitle="Twelve rooms, individually dressed — a fit for every party, from a quiet double to the whole family."
         image="/images/rooms/double-abstract-headboard.jpg"
+        imageAlt="A guest room at Mirage Hotel, Blackpool"
       />
 
       <section className="mx-auto max-w-7xl px-6 py-24 sm:py-28 lg:px-10">

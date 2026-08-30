@@ -5,12 +5,15 @@ import { Phone, Smartphone, Mail, MapPin, Navigation, MessageSquareText } from "
 import { PageHero } from "@/components/site/page-hero";
 import { Eyebrow, GoldDivider, OrnamentFrame } from "@/components/site/ornament";
 import { Button } from "@/components/ui/button";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/structured-data";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
     "Get in touch with Mirage Hotel, Blackpool — phone, email, address, and directions to 21 Banks Street.",
+  alternates: { canonical: "/contact" },
 };
 
 const contactCards = [
@@ -43,11 +46,13 @@ const contactCards = [
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Contact", path: "/contact" }])} />
       <PageHero
         eyebrow="Get In Touch"
         title="Contact Us"
         subtitle="Questions, group bookings, or just want to talk it through? We're one call away."
         image="/images/hotel/detail-mirror-roses.jpg"
+        imageAlt="Interior detail at Mirage Hotel, Blackpool"
       />
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-10">

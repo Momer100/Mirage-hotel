@@ -7,17 +7,19 @@ export function PageHero({
   title,
   subtitle,
   image,
+  imageAlt = "",
 }: {
   eyebrow: string;
   title: string;
   subtitle?: string;
   image: string;
+  imageAlt?: string;
 }) {
   return (
     <section className="relative flex h-[46vh] min-h-[340px] w-full items-center justify-center overflow-hidden pt-16">
       <Image
         src={image}
-        alt=""
+        alt={imageAlt}
         fill
         priority
         className="object-cover"

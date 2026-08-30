@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,6 +12,8 @@ import {
   DoorOpen,
 } from "lucide-react";
 
+import { JsonLd } from "@/components/seo/json-ld";
+import { faqSchema } from "@/lib/structured-data";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -34,9 +37,14 @@ const highlights = [
   { icon: ShieldCheck, label: "Warm, personal hospitality" },
 ];
 
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={faqSchema} />
       {/* ---------------------------------------------------------------- HERO */}
       <section className="relative flex min-h-[92vh] w-full items-center justify-center overflow-hidden">
         <Image

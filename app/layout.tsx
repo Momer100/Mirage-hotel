@@ -20,29 +20,59 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { Toaster } from "@/components/ui/sonner";
+import { JsonLd } from "@/components/seo/json-ld";
+import { hotelSchema, websiteSchema } from "@/lib/structured-data";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.miragehotel.co.uk"),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} | Luxury Boutique Hotel, Blackpool`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name }],
+  category: "hotel",
   keywords: [
     "Mirage Hotel Blackpool",
     "Blackpool hotel",
     "boutique hotel Blackpool",
     "Banks Street Blackpool hotel",
     "Blackpool accommodation",
+    "hotels near Blackpool Tower",
   ],
+  alternates: {
+    canonical: "/",
+  },
+  formatDetection: {
+    telephone: true,
+    email: false,
+    address: false,
+  },
   openGraph: {
     title: `${siteConfig.name} | Luxury Boutique Hotel, Blackpool`,
     description: siteConfig.description,
-    url: "https://www.miragehotel.co.uk",
+    url: siteConfig.url,
     siteName: siteConfig.name,
     locale: "en_GB",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} | Luxury Boutique Hotel, Blackpool`,
+    description: siteConfig.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -54,6 +84,8 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <body className="min-h-screen bg-ink text-ivory antialiased font-sans">
+        <JsonLd data={hotelSchema} />
+        <JsonLd data={websiteSchema} />
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />

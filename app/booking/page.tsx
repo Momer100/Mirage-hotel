@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import Link from "next/link";
 import { Mail, Phone, ShieldCheck, Clock, BadgePercent } from "lucide-react";
 
 import { PageHero } from "@/components/site/page-hero";
 import { Eyebrow } from "@/components/site/ornament";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/structured-data";
 import { siteConfig } from "@/lib/site-config";
 import { BookingForm } from "./booking-form";
 
@@ -11,6 +14,7 @@ export const metadata: Metadata = {
   title: "Booking Request",
   description:
     "Request your stay at Mirage Hotel, Blackpool — send your dates, guests and room preference and we'll confirm your booking directly, saving you 10%.",
+  alternates: { canonical: "/booking" },
 };
 
 const reassurances = [
@@ -34,11 +38,13 @@ const reassurances = [
 export default function BookingPage() {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Booking Request", path: "/booking" }])} />
       <PageHero
         eyebrow="Reservations"
         title="Booking Request"
         subtitle="Tell us your dates and we'll take it from there."
         image="/images/rooms/family-twin-1.jpg"
+        imageAlt="A family room at Mirage Hotel, Blackpool"
       />
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-10">
@@ -81,6 +87,21 @@ export default function BookingPage() {
                   <Mail className="size-4 text-gold" /> {siteConfig.email}
                 </a>
               </div>
+            </div>
+
+            <div className="border-t border-hairline pt-8">
+              <Eyebrow className="justify-start">Not Sure Yet?</Eyebrow>
+              <p className="mt-6 text-sm leading-relaxed text-ivory-dim">
+                Take a look at{" "}
+                <Link href="/rooms" className="text-gold underline-offset-4 hover:underline">
+                  our rooms
+                </Link>{" "}
+                or browse the{" "}
+                <Link href="/gallery" className="text-gold underline-offset-4 hover:underline">
+                  photo gallery
+                </Link>{" "}
+                before you send your request.
+              </p>
             </div>
           </aside>
         </div>

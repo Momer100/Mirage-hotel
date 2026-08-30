@@ -3,6 +3,7 @@ export const siteConfig = {
   tagline: "A Blackpool Landmark, Reimagined",
   description:
     "A 12-room hotel on Blackpool's Banks Street, moments from the Promenade and the Tower — refurbished with a quietly luxurious hand and run with genuine, personal hospitality.",
+  url: "https://www.miragehotel.co.uk",
   phone: "01253 380 654",
   phoneHref: "tel:+441253380654",
   mobile: "0796 107 5000",
@@ -11,7 +12,11 @@ export const siteConfig = {
   address: {
     line1: "21 Banks Street",
     line2: "Blackpool, FY1 1RN",
+    locality: "Blackpool",
+    region: "Lancashire",
+    postalCode: "FY1 1RN",
     country: "United Kingdom",
+    countryCode: "GB",
   },
   mapsUrl: "https://maps.app.goo.gl/DZV2q4PnPJD5zWdN7",
   mapsEmbedSrc:
