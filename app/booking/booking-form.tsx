@@ -330,7 +330,7 @@ export function BookingForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone number</FormLabel>
+                <FormLabel>Mobile number</FormLabel>
                 <FormControl>
                   <Input
                     type="tel"

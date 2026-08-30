@@ -1,7 +1,6 @@
 export type RoomType = {
   slug: string;
   name: string;
-  eyebrow: string;
   sleeps: number;
   bedConfig: string;
   description: string;
@@ -19,7 +18,6 @@ export const roomTypes: RoomType[] = [
   {
     slug: "double",
     name: "Classic Double Room",
-    eyebrow: "Room 01",
     sleeps: 2,
     bedConfig: "1 double bed",
     description:
@@ -40,7 +38,6 @@ export const roomTypes: RoomType[] = [
   {
     slug: "triple",
     name: "Triple Room",
-    eyebrow: "Room 02",
     sleeps: 3,
     bedConfig: "1 double bed & 1 single bed",
     description:
@@ -51,12 +48,11 @@ export const roomTypes: RoomType[] = [
       "Hospitality tray with tea & coffee",
       "Central heating & free Wi-Fi",
     ],
-    images: ["/images/rooms/triple-bunk.jpg"],
+    images: ["/images/rooms/tripleroom.jpg", "/images/rooms/tripleroom2.jpg"],
   },
   {
     slug: "family-4",
     name: "Family Room (Sleeps 4)",
-    eyebrow: "Room 03",
     sleeps: 4,
     bedConfig: "2 double beds",
     description:
@@ -72,18 +68,17 @@ export const roomTypes: RoomType[] = [
   {
     slug: "family-5",
     name: "Family Room (Sleeps 5)",
-    eyebrow: "Room 04",
     sleeps: 5,
-    bedConfig: "2 double beds, plus an additional put-up bed",
+    bedConfig: "1 double bed & 1 triple bunk (double + single)",
     description:
-      "Our largest family room, built around two double beds with an additional put-up bed available on request — a comfortable base for bigger families visiting Blackpool together.",
+      "Our largest family room, with a full double bed plus a triple bunk — a double below and a single above — a comfortable, practical base for bigger families visiting Blackpool together.",
     amenities: [
-      "2 double beds + 1 additional put-up bed",
+      "1 double bed & 1 triple bunk bed (double & single)",
       "Freeview television",
       "Hospitality tray with tea & coffee",
       "Central heating & free Wi-Fi",
     ],
-    images: ["/images/rooms/family-twin-1.jpg", "/images/rooms/family-twin-2.jpg"],
+    images: ["/images/rooms/triple-bunk.jpg"],
   },
 ];
 

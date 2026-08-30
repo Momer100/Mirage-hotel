@@ -7,7 +7,7 @@
 export const policies = [
   {
     title: "Check-in & check-out",
-    body: "Check-in is from 3:00 PM and check-out is by 10:30 AM. If you're planning to arrive outside these hours, let us know when you book and we'll do our best to accommodate you.",
+    body: "Check-in is from 1:00 PM to 8:00 PM and check-out is by 10:30 AM. If you're planning to arrive outside these hours, let us know when you book and we'll do our best to accommodate you.",
   },
   {
     title: "Booking & payment",

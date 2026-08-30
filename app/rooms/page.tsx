@@ -62,10 +62,7 @@ export default function RoomsPage() {
               </div>
 
               <div className={index % 2 === 1 ? "lg:order-1" : ""}>
-                <span className="text-[11px] font-medium uppercase tracking-[0.24em] text-gold">
-                  {room.eyebrow}
-                </span>
-                <h2 className="mt-3 font-display text-4xl text-ivory sm:text-5xl">
+                <h2 className="font-display text-4xl text-ivory sm:text-5xl">
                   {room.name}
                 </h2>
 

@@ -3,8 +3,10 @@ export const siteConfig = {
   tagline: "A Blackpool Landmark, Reimagined",
   description:
     "A 12-room hotel on Blackpool's Banks Street, moments from the Promenade and the Tower — refurbished with a quietly luxurious hand and run with genuine, personal hospitality.",
-  phone: "0796 107 5000",
-  phoneHref: "tel:+447961075000",
+  phone: "01253 380 654",
+  phoneHref: "tel:+441253380654",
+  mobile: "0796 107 5000",
+  mobileHref: "tel:+447961075000",
   email: "mirage.co.uk@gmail.com",
   address: {
     line1: "21 Banks Street",
@@ -23,7 +25,7 @@ export const siteConfig = {
     { label: "Booking Request", href: "/booking" },
     { label: "Contact", href: "/contact" },
   ],
-  checkIn: "3:00 PM",
+  checkIn: "1:00 PM to 8:00 PM",
   checkOut: "10:30 AM",
 };
 

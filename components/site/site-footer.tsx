@@ -52,6 +52,11 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
+                <a href={siteConfig.mobileHref} className="flex items-center gap-2 hover:text-gold transition-colors">
+                  <Phone className="size-3.5 text-gold" /> {siteConfig.mobile}
+                </a>
+              </li>
+              <li>
                 <a
                   href={`mailto:${siteConfig.email}`}
                   className="flex items-center gap-2 hover:text-gold transition-colors"

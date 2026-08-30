@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Phone, Mail, MapPin, Navigation, MessageSquareText } from "lucide-react";
+import { Phone, Smartphone, Mail, MapPin, Navigation, MessageSquareText } from "lucide-react";
 
 import { PageHero } from "@/components/site/page-hero";
 import { Eyebrow, GoldDivider, OrnamentFrame } from "@/components/site/ornament";
@@ -19,6 +19,12 @@ const contactCards = [
     label: "Phone",
     value: siteConfig.phone,
     href: siteConfig.phoneHref,
+  },
+  {
+    icon: Smartphone,
+    label: "Mobile",
+    value: siteConfig.mobile,
+    href: siteConfig.mobileHref,
   },
   {
     icon: Mail,
@@ -45,7 +51,7 @@ export default function ContactPage() {
       />
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-10">
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {contactCards.map(({ icon: Icon, label, value, href }) => (
             <a
               key={label}

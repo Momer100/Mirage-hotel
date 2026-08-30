@@ -19,9 +19,6 @@ export function RoomCard({ room, priority = false }: { room: RoomType; priority?
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
-        <span className="absolute top-3 left-3 border border-gold/40 bg-ink/70 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-gold backdrop-blur-sm">
-          {room.eyebrow}
-        </span>
       </div>
 
       <div className="flex flex-1 flex-col gap-4 p-5">
