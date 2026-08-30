@@ -8,7 +8,7 @@ const galleryImages: GalleryImage[] = [
   { src: "/images/hotel/lounge.jpg", alt: "Guest lounge with fireplace and TV" },
   { src: "/images/gallery/gallery-fresh-flowers.jpg", alt: "Fresh flowers welcoming guests at Mirage Hotel" },
   { src: "/images/rooms/double-sunset.jpg", alt: "Double room with sunset artwork" },
-  { src: "/images/gallery/gallery-sunburst-mirrors.jpg", alt: "Gold sunburst mirrors on a feature wall" },
+  { src: "/images/gallery/gallery-plant-display.jpg", alt: "Heart-shaped plant and flower display in the hallway" },
   { src: "/images/rooms/family-twin-1.jpg", alt: "Family room with two double beds" },
   { src: "/images/rooms/double-tree-wallpaper.jpg", alt: "Double room with feature wallpaper" },
   { src: "/images/gallery/gallery-abstract-prints.jpg", alt: "Framed abstract prints in a guest room" },
