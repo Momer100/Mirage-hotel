@@ -39,7 +39,7 @@ export function SiteHeader() {
             width={220}
             height={100}
             priority
-            className="h-8 w-auto sm:h-10"
+            className="h-10 w-auto sm:h-12"
           />
         </Link>
 
@@ -67,13 +67,21 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
-          <a
-            href={siteConfig.phoneHref}
-            className="text-[11px] font-medium uppercase tracking-[0.16em] text-ivory-dim hover:text-gold transition-colors"
-          >
-            {siteConfig.phone}
-          </a>
+        <div className="hidden items-center gap-5 lg:flex">
+          <div className="flex flex-col items-end gap-0.5 leading-none">
+            <a
+              href={siteConfig.phoneHref}
+              className="text-[11px] font-medium uppercase tracking-[0.16em] text-ivory-dim hover:text-gold transition-colors"
+            >
+              {siteConfig.phone}
+            </a>
+            <a
+              href={siteConfig.mobileHref}
+              className="text-[11px] font-medium uppercase tracking-[0.16em] text-ivory-dim hover:text-gold transition-colors"
+            >
+              {siteConfig.mobile}
+            </a>
+          </div>
           <Button asChild size="sm">
             <Link href="/booking">Book Your Stay</Link>
           </Button>
@@ -111,6 +119,12 @@ export function SiteHeader() {
                 className="text-sm uppercase tracking-[0.14em] text-ivory-dim hover:text-gold"
               >
                 {siteConfig.phone}
+              </a>
+              <a
+                href={siteConfig.mobileHref}
+                className="text-sm uppercase tracking-[0.14em] text-ivory-dim hover:text-gold"
+              >
+                {siteConfig.mobile}
               </a>
               <SheetClose asChild>
                 <Button asChild>
