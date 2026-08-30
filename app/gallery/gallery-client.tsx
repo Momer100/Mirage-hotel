@@ -19,7 +19,7 @@ const galleryImages: GalleryImage[] = [
   { src: "/images/gallery/blackpool-display-wall.jpg", alt: "Framed Blackpool photography inside the hotel" },
   { src: "/images/hotel/detail-tea-tray.jpg", alt: "In-room tea and coffee tray" },
   { src: "/images/rooms/double-autumn-ensuite.jpg", alt: "Double room leading to en-suite" },
-  { src: "/images/gallery/gallery-hospitality-tray.jpg", alt: "In-room hospitality tray with kettle, tea and coffee" },
+  { src: "/images/rooms/tripleroom.jpg", alt: "Triple room with a double bed" },
   { src: "/images/rooms/family-twin-2.jpg", alt: "Family room, alternate view" },
   { src: "/images/hotel/detail-sunburst-mirrors.jpg", alt: "Gold sunburst mirror detail" },
   { src: "/images/gallery/blackpool-landscapes-wall.jpg", alt: "Framed landscape photography in the hallway" },
