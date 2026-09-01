@@ -4,6 +4,7 @@ import { MapPin, Mail, Phone } from "lucide-react";
 
 import { siteConfig } from "@/lib/site-config";
 import { GoldDivider } from "@/components/site/ornament";
+import { CookieSettingsButton } from "@/components/site/cookie-settings-button";
 
 export function SiteFooter() {
   return (
@@ -105,6 +106,7 @@ export function SiteFooter() {
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
+          <CookieSettingsButton />
           <p>{siteConfig.address.line1}, {siteConfig.address.line2}</p>
         </div>
       </div>

@@ -20,9 +20,8 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { Toaster } from "@/components/ui/sonner";
-import Script from "next/script";
-
 import { JsonLd } from "@/components/seo/json-ld";
+import { CookieConsent } from "@/components/site/cookie-consent";
 import { hotelSchema, websiteSchema } from "@/lib/structured-data";
 import { siteConfig } from "@/lib/site-config";
 
@@ -92,17 +91,8 @@ export default function RootLayout({
         <main>{children}</main>
         <SiteFooter />
         <Toaster />
-        {/* Google Analytics (GA4) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-QMM5B31984"
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-QMM5B31984');`}
-        </Script>
+        {/* Cookie consent — loads Google Analytics only after acceptance. */}
+        <CookieConsent />
       </body>
     </html>
   );
