@@ -101,7 +101,11 @@ gtag('config', '${GA_ID}');`}
             <p className="max-w-2xl text-sm leading-relaxed text-ivory-dim">
               We use cookies to understand how our site is used and to improve your experience.
               You can accept or decline analytics cookies — declining won&apos;t affect your
-              booking.
+              booking. Read our{" "}
+              <a href="/privacy" className="text-gold underline-offset-4 hover:underline">
+                Privacy &amp; Cookie Policy
+              </a>
+              .
             </p>
             <div className="flex shrink-0 gap-3">
               <Button variant="outline" size="sm" onClick={() => choose("declined")}>

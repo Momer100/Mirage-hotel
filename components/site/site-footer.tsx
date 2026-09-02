@@ -106,7 +106,15 @@ export function SiteFooter() {
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <CookieSettingsButton />
+          <div className="flex items-center gap-5">
+            <Link
+              href="/privacy"
+              className="uppercase tracking-[0.14em] text-ivory-dim/60 transition-colors hover:text-gold"
+            >
+              Privacy
+            </Link>
+            <CookieSettingsButton />
+          </div>
           <p>{siteConfig.address.line1}, {siteConfig.address.line2}</p>
         </div>
       </div>

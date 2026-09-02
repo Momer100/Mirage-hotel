@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/booking", changeFrequency: "monthly", priority: 0.9 },
     { path: "/gallery", changeFrequency: "monthly", priority: 0.7 },
     { path: "/contact", changeFrequency: "yearly", priority: 0.7 },
+    { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
   ];
 
   return routes.map(({ path, changeFrequency, priority }) => ({
