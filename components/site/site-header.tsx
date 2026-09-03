@@ -7,11 +7,19 @@ import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { siteConfig } from "@/lib/site-config";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 
-export function SiteHeader() {
+type HeaderSettings = {
+  name: string;
+  nav: { label: string; href: string }[];
+  phone: string;
+  phoneHref: string;
+  mobile: string;
+  mobileHref: string;
+};
+
+export function SiteHeader({ settings }: { settings: HeaderSettings }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = React.useState(false);
 
@@ -44,7 +52,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-9 lg:flex">
-          {siteConfig.nav.map((item) => {
+          {settings.nav.map((item) => {
             const active = pathname === item.href;
             return (
               <Link
@@ -70,16 +78,16 @@ export function SiteHeader() {
         <div className="hidden items-center gap-5 lg:flex">
           <div className="flex flex-col items-end gap-0.5 leading-none">
             <a
-              href={siteConfig.phoneHref}
+              href={settings.phoneHref}
               className="text-[11px] font-medium uppercase tracking-[0.16em] text-ivory-dim hover:text-gold transition-colors"
             >
-              {siteConfig.phone}
+              {settings.phone}
             </a>
             <a
-              href={siteConfig.mobileHref}
+              href={settings.mobileHref}
               className="text-[11px] font-medium uppercase tracking-[0.16em] text-ivory-dim hover:text-gold transition-colors"
             >
-              {siteConfig.mobile}
+              {settings.mobile}
             </a>
           </div>
           <Button asChild size="sm">
@@ -97,9 +105,9 @@ export function SiteHeader() {
             </button>
           </SheetTrigger>
           <SheetContent>
-            <SheetTitle>{siteConfig.name}</SheetTitle>
+            <SheetTitle>{settings.name}</SheetTitle>
             <nav className="flex flex-col gap-6">
-              {siteConfig.nav.map((item) => (
+              {settings.nav.map((item) => (
                 <SheetClose asChild key={item.href}>
                   <Link
                     href={item.href}
@@ -115,16 +123,16 @@ export function SiteHeader() {
             </nav>
             <div className="mt-auto flex flex-col gap-4 border-t border-hairline pt-6">
               <a
-                href={siteConfig.phoneHref}
+                href={settings.phoneHref}
                 className="text-sm uppercase tracking-[0.14em] text-ivory-dim hover:text-gold"
               >
-                {siteConfig.phone}
+                {settings.phone}
               </a>
               <a
-                href={siteConfig.mobileHref}
+                href={settings.mobileHref}
                 className="text-sm uppercase tracking-[0.14em] text-ivory-dim hover:text-gold"
               >
-                {siteConfig.mobile}
+                {settings.mobile}
               </a>
               <SheetClose asChild>
                 <Button asChild>

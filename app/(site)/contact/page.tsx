@@ -7,7 +7,7 @@ import { Eyebrow, GoldDivider, OrnamentFrame } from "@/components/site/ornament"
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/structured-data";
-import { siteConfig } from "@/lib/site-config";
+import { getSettings } from "@/sanity/lib/data";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -16,34 +16,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-const contactCards = [
-  {
-    icon: Phone,
-    label: "Phone",
-    value: siteConfig.phone,
-    href: siteConfig.phoneHref,
-  },
-  {
-    icon: Smartphone,
-    label: "Mobile",
-    value: siteConfig.mobile,
-    href: siteConfig.mobileHref,
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    value: siteConfig.email,
-    href: `mailto:${siteConfig.email}`,
-  },
-  {
-    icon: MapPin,
-    label: "Address",
-    value: `${siteConfig.address.line1}, ${siteConfig.address.line2}`,
-    href: siteConfig.mapsUrl,
-  },
-];
-
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSettings();
+  const contactCards = [
+    { icon: Phone, label: "Phone", value: settings.phone, href: settings.phoneHref },
+    { icon: Smartphone, label: "Mobile", value: settings.mobile, href: settings.mobileHref },
+    { icon: Mail, label: "Email", value: settings.email, href: `mailto:${settings.email}` },
+    {
+      icon: MapPin,
+      label: "Address",
+      value: `${settings.address.line1}, ${settings.address.line2}`,
+      href: settings.mapsUrl,
+    },
+  ];
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Contact", path: "/contact" }])} />
@@ -86,7 +71,7 @@ export default function ContactPage() {
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <a href={siteConfig.mapsUrl} target="_blank" rel="noreferrer">
+            <a href={settings.mapsUrl} target="_blank" rel="noreferrer">
               <Navigation className="size-4" />
               Get Directions
             </a>
@@ -112,7 +97,7 @@ export default function ContactPage() {
           <div className="relative h-[420px] w-full overflow-hidden sm:h-[480px]">
             <iframe
               title="Mirage Hotel location on Google Maps"
-              src={siteConfig.mapsEmbedSrc}
+              src={settings.mapsEmbedSrc}
               width="100%"
               height="100%"
               style={{ border: 0, filter: "grayscale(0.4) contrast(1.05)" }}

@@ -7,7 +7,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { Eyebrow } from "@/components/site/ornament";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/structured-data";
-import { siteConfig } from "@/lib/site-config";
+import { getSettings, getRooms } from "@/sanity/lib/data";
 import { BookingForm } from "./booking-form";
 
 export const metadata: Metadata = {
@@ -17,25 +17,25 @@ export const metadata: Metadata = {
   alternates: { canonical: "/booking" },
 };
 
-const reassurances = [
-  {
-    icon: BadgePercent,
-    title: `${siteConfig.directBookingDiscount}% off, guaranteed`,
-    body: "Booking direct always beats third-party rates, with no booking fees.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "A real reply, from us",
-    body: "Every request is answered personally by the Mirage Hotel team.",
-  },
-  {
-    icon: Clock,
-    title: "Quick turnaround",
-    body: "We aim to confirm availability and rates within one business day.",
-  },
-];
-
-export default function BookingPage() {
+export default async function BookingPage() {
+  const [settings, rooms] = await Promise.all([getSettings(), getRooms()]);
+  const reassurances = [
+    {
+      icon: BadgePercent,
+      title: `${settings.directBookingDiscount}% off, guaranteed`,
+      body: "Booking direct always beats third-party rates, with no booking fees.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "A real reply, from us",
+      body: "Every request is answered personally by the Mirage Hotel team.",
+    },
+    {
+      icon: Clock,
+      title: "Quick turnaround",
+      body: "We aim to confirm availability and rates within one business day.",
+    },
+  ];
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Booking Request", path: "/booking" }])} />
@@ -50,7 +50,7 @@ export default function BookingPage() {
       <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-10">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-16">
           <Suspense fallback={<div className="h-[600px]" />}>
-            <BookingForm />
+            <BookingForm rooms={rooms.map((r) => ({ slug: r.slug, name: r.name }))} />
           </Suspense>
 
           <aside className="flex flex-col gap-8">
@@ -75,16 +75,16 @@ export default function BookingPage() {
               <Eyebrow className="justify-start">Prefer To Talk?</Eyebrow>
               <div className="mt-6 flex flex-col gap-4">
                 <a
-                  href={siteConfig.phoneHref}
+                  href={settings.phoneHref}
                   className="flex items-center gap-3 text-sm text-ivory-dim transition-colors hover:text-gold"
                 >
-                  <Phone className="size-4 text-gold" /> {siteConfig.phone}
+                  <Phone className="size-4 text-gold" /> {settings.phone}
                 </a>
                 <a
-                  href={`mailto:${siteConfig.email}`}
+                  href={`mailto:${settings.email}`}
                   className="flex items-center gap-3 text-sm text-ivory-dim transition-colors hover:text-gold"
                 >
-                  <Mail className="size-4 text-gold" /> {siteConfig.email}
+                  <Mail className="size-4 text-gold" /> {settings.email}
                 </a>
               </div>
             </div>

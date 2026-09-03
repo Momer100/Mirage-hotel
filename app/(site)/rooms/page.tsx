@@ -8,7 +8,7 @@ import { OrnamentFrame, GoldDivider, Eyebrow } from "@/components/site/ornament"
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema, roomsItemListSchema } from "@/lib/structured-data";
-import { roomTypes } from "@/lib/rooms";
+import { getRooms } from "@/sanity/lib/data";
 
 export const metadata: Metadata = {
   title: "Our Rooms",
@@ -17,7 +17,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/rooms" },
 };
 
-export default function RoomsPage() {
+export default async function RoomsPage() {
+  const rooms = await getRooms();
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Our Rooms", path: "/rooms" }])} />
@@ -32,7 +33,7 @@ export default function RoomsPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-24 sm:py-28 lg:px-10">
         <div className="flex flex-col gap-24">
-          {roomTypes.map((room, index) => (
+          {rooms.map((room, index) => (
             <div
               key={room.slug}
               id={room.slug}

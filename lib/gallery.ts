@@ -1,9 +1,7 @@
-"use client";
+export type GalleryImage = { src: string; alt: string };
 
-import { GalleryGrid, type GalleryImage } from "@/components/site/gallery-grid";
-
-// 20 images so the 2- and 4-column grid always tiles into full rows.
-const galleryImages: GalleryImage[] = [
+/** Default gallery — used as a fallback when the CMS has no gallery yet. */
+export const defaultGallery: GalleryImage[] = [
   { src: "/images/hotel/exterior.jpg", alt: "Mirage Hotel frontage on Banks Street" },
   { src: "/images/hotel/lounge.jpg", alt: "Guest lounge with fireplace and TV" },
   { src: "/images/gallery/gallery-fresh-flowers.jpg", alt: "Fresh flowers welcoming guests at Mirage Hotel" },
@@ -25,7 +23,3 @@ const galleryImages: GalleryImage[] = [
   { src: "/images/gallery/blackpool-landscapes-wall.jpg", alt: "Framed landscape photography in the hallway" },
   { src: "/images/hotel/detail-mirror-roses.jpg", alt: "Gold mirror with white roses" },
 ];
-
-export function GalleryClient() {
-  return <GalleryGrid images={galleryImages} />;
-}

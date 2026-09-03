@@ -24,9 +24,13 @@ import {
 import { OrnamentFrame, GoldDivider, Eyebrow } from "@/components/site/ornament";
 import { DirectorSection } from "@/components/site/director-section";
 import { RoomCard } from "@/components/site/room-card";
-import { roomTypes } from "@/lib/rooms";
-import { policies } from "@/lib/policies";
-import { siteConfig } from "@/lib/site-config";
+import {
+  getRooms,
+  getHomePage,
+  getPolicies,
+  getSettings,
+  paragraphs,
+} from "@/sanity/lib/data";
 
 const highlights = [
   { icon: DoorOpen, label: "12 individually dressed rooms" },
@@ -41,7 +45,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [rooms, home, policies, settings] = await Promise.all([
+    getRooms(),
+    getHomePage(),
+    getPolicies(),
+    getSettings(),
+  ]);
   return (
     <>
       <JsonLd data={faqSchema} />
@@ -61,11 +71,10 @@ export default function HomePage() {
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 pt-24 text-center animate-fade-up">
           <Eyebrow>Banks Street &middot; Blackpool</Eyebrow>
           <h1 className="mt-6 text-balance font-display text-5xl leading-[1.05] text-ivory sm:text-6xl lg:text-7xl">
-            {siteConfig.tagline}
+            {home.heroTitle}
           </h1>
           <p className="mt-6 max-w-xl font-accent text-xl italic leading-relaxed text-ivory-dim sm:text-2xl">
-            Twelve rooms, quietly refurbished, on a doorstep that opens onto
-            everything Blackpool does best.
+            {home.heroSubtitle}
           </p>
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
@@ -80,7 +89,7 @@ export default function HomePage() {
 
         <div className="absolute inset-x-0 bottom-0 z-10 border-t border-gold/30 bg-ink/70 py-3 backdrop-blur-sm">
           <p className="px-6 text-center text-[11px] font-medium uppercase tracking-[0.22em] text-gold sm:text-xs">
-            Book direct and save {siteConfig.directBookingDiscount}% &mdash; our best
+            Book direct and save {settings.directBookingDiscount}% &mdash; our best
             rate, guaranteed, every time
           </p>
         </div>
@@ -92,27 +101,16 @@ export default function HomePage() {
           <div>
             <Eyebrow>Welcome</Eyebrow>
             <h2 className="mt-5 text-balance font-display text-4xl leading-tight text-ivory sm:text-5xl">
-              Welcome to Mirage Hotel
+              {home.welcomeHeading}
             </h2>
-            <p className="mt-6 leading-relaxed text-ivory-dim">
-              Welcome to Mirage Hotel &mdash; a newly established, independent
-              hotel in the heart of Blackpool, opened in 2026. Our aim is to
-              give every guest a comfortable, friendly and enjoyable stay in
-              a warm, welcoming atmosphere.
-            </p>
-            <p className="mt-4 leading-relaxed text-ivory-dim">
-              We take pride in looking after our guests and paying attention
-              to the small details that make a stay special. From a warm
-              welcome on arrival to helping with anything you may need
-              during your visit, our goal is to make every guest feel
-              comfortable, valued and at home.
-            </p>
-            <p className="mt-4 leading-relaxed text-ivory-dim">
-              Whether you&apos;re visiting Blackpool for a family holiday, a
-              short break, a weekend away, or to enjoy the many attractions
-              the town has to offer, we look forward to welcoming you to
-              Mirage Hotel.
-            </p>
+            {paragraphs(home.welcomeBody).map((p, i) => (
+              <p
+                key={i}
+                className={`${i === 0 ? "mt-6" : "mt-4"} leading-relaxed text-ivory-dim`}
+              >
+                {p}
+              </p>
+            ))}
 
             <ul className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
               {highlights.map(({ icon: Icon, label }) => (
@@ -143,13 +141,13 @@ export default function HomePage() {
       {/* --------------------------------------------------------- BOOK DIRECT */}
       <section className="border-y border-hairline bg-navy/60">
         <div className="mx-auto max-w-5xl px-6 py-20 text-center lg:px-10">
-          <Eyebrow>Book Direct &amp; Save {siteConfig.directBookingDiscount}%</Eyebrow>
+          <Eyebrow>Book Direct &amp; Save {settings.directBookingDiscount}%</Eyebrow>
           <h2 className="mt-5 font-display text-4xl text-ivory sm:text-5xl">
-            Save {siteConfig.directBookingDiscount}%, every time
+            Save {settings.directBookingDiscount}%, every time
           </h2>
           <p className="mx-auto mt-5 max-w-xl leading-relaxed text-ivory-dim">
             Book directly with Mirage Hotel and receive a{" "}
-            {siteConfig.directBookingDiscount}% discount off our standard
+            {settings.directBookingDiscount}% discount off our standard
             rate &mdash; with no third-party booking fees added on top.
           </p>
           <div className="mt-10">
@@ -174,7 +172,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {roomTypes.map((room, i) => (
+          {rooms.map((room, i) => (
             <RoomCard key={room.slug} room={room} priority={i === 0} />
           ))}
         </div>
@@ -210,7 +208,13 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------------------------------------- DIRECTOR */}
-      <DirectorSection />
+      <DirectorSection
+        name={home.directorName}
+        role={home.directorRole}
+        bio={paragraphs(home.directorBio)}
+        image={home.directorImage}
+        imageAlt={home.directorImageAlt}
+      />
 
       {/* ---------------------------------------------------------- LOCATION */}
       <section className="mx-auto max-w-7xl px-6 py-24 sm:py-28 lg:px-10">

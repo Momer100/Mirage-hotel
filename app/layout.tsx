@@ -17,12 +17,6 @@ import "@fontsource/cormorant-garamond/400-italic.css";
 import "@fontsource/cormorant-garamond/500-italic.css";
 
 import "./globals.css";
-import { SiteHeader } from "@/components/site/site-header";
-import { SiteFooter } from "@/components/site/site-footer";
-import { Toaster } from "@/components/ui/sonner";
-import { JsonLd } from "@/components/seo/json-ld";
-import { CookieConsent } from "@/components/site/cookie-consent";
-import { hotelSchema, websiteSchema } from "@/lib/structured-data";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -85,14 +79,7 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <body className="min-h-screen bg-ink text-ivory antialiased font-sans">
-        <JsonLd data={hotelSchema} />
-        <JsonLd data={websiteSchema} />
-        <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
-        <Toaster />
-        {/* Cookie consent — loads Google Analytics only after acceptance. */}
-        <CookieConsent />
+        {children}
       </body>
     </html>
   );

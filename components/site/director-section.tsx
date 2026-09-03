@@ -3,15 +3,27 @@ import { Quote } from "lucide-react";
 
 import { Eyebrow, OrnamentFrame } from "@/components/site/ornament";
 
-export function DirectorSection() {
+export function DirectorSection({
+  name,
+  role,
+  bio,
+  image,
+  imageAlt,
+}: {
+  name: string;
+  role: string;
+  bio: string[];
+  image: string;
+  imageAlt: string;
+}) {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24 sm:py-28 lg:px-10">
       <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
         <OrnamentFrame className="relative aspect-[3/2] w-full overflow-hidden border border-hairline p-2.5">
           <div className="relative h-full w-full overflow-hidden">
             <Image
-              src="/images/hotel/director.png"
-              alt="Dr. John Najdad, Managing Director of Mirage Hotel, in the hotel lobby"
+              src={image}
+              alt={imageAlt}
               fill
               sizes="(min-width: 1024px) 580px, 90vw"
               className="object-cover"
@@ -26,22 +38,9 @@ export function DirectorSection() {
           </h2>
 
           <div className="mt-6 space-y-4 leading-relaxed text-ivory-dim">
-            <p>
-              Mirage Hotel is managed by Dr. John Najdad, who brings more
-              than 20 years of experience in the hotel and hospitality
-              business.
-            </p>
-            <p>
-              With many years of experience looking after guests, he
-              understands that good hospitality is about more than simply
-              providing a room. It is about cleanliness, comfort, personal
-              service and making guests feel genuinely welcome.
-            </p>
-            <p>
-              His personal commitment is to build Mirage Hotel into a hotel
-              known for its friendly service, comfortable rooms and
-              attention to guests&apos; needs.
-            </p>
+            {bio.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
           </div>
 
           <OrnamentFrame className="mt-8 border border-gold/30 bg-ink-elevated/40 p-7 sm:p-9">
@@ -52,7 +51,7 @@ export function DirectorSection() {
               welcome.
             </p>
             <p className="mt-4 text-sm uppercase tracking-[0.14em] text-gold">
-              &mdash; Dr. John Najdad, Managing Director
+              &mdash; {name}, {role}
             </p>
           </OrnamentFrame>
         </div>

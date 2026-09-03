@@ -2,11 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Mail, Phone } from "lucide-react";
 
-import { siteConfig } from "@/lib/site-config";
+import type { Settings } from "@/sanity/lib/data";
 import { GoldDivider } from "@/components/site/ornament";
 import { CookieSettingsButton } from "@/components/site/cookie-settings-button";
 
-export function SiteFooter() {
+export function SiteFooter({ settings }: { settings: Settings }) {
   return (
     <footer className="border-t border-hairline bg-ink">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
@@ -20,7 +20,7 @@ export function SiteFooter() {
               className="h-9 w-auto"
             />
             <p className="mt-5 max-w-xs font-accent text-lg italic leading-relaxed text-ivory-dim">
-              {siteConfig.tagline}
+              {settings.tagline}
             </p>
           </div>
 
@@ -29,7 +29,7 @@ export function SiteFooter() {
               Explore
             </h3>
             <ul className="mt-5 space-y-3">
-              {siteConfig.nav.map((item) => (
+              {settings.nav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -48,35 +48,35 @@ export function SiteFooter() {
             </h3>
             <ul className="mt-5 space-y-3 text-sm text-ivory-dim">
               <li>
-                <a href={siteConfig.phoneHref} className="flex items-center gap-2 hover:text-gold transition-colors">
-                  <Phone className="size-3.5 text-gold" /> {siteConfig.phone}
+                <a href={settings.phoneHref} className="flex items-center gap-2 hover:text-gold transition-colors">
+                  <Phone className="size-3.5 text-gold" /> {settings.phone}
                 </a>
               </li>
               <li>
-                <a href={siteConfig.mobileHref} className="flex items-center gap-2 hover:text-gold transition-colors">
-                  <Phone className="size-3.5 text-gold" /> {siteConfig.mobile}
+                <a href={settings.mobileHref} className="flex items-center gap-2 hover:text-gold transition-colors">
+                  <Phone className="size-3.5 text-gold" /> {settings.mobile}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${siteConfig.email}`}
+                  href={`mailto:${settings.email}`}
                   className="flex items-center gap-2 hover:text-gold transition-colors"
                 >
-                  <Mail className="size-3.5 text-gold" /> {siteConfig.email}
+                  <Mail className="size-3.5 text-gold" /> {settings.email}
                 </a>
               </li>
               <li>
                 <a
-                  href={siteConfig.mapsUrl}
+                  href={settings.mapsUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-start gap-2 hover:text-gold transition-colors"
                 >
                   <MapPin className="mt-0.5 size-3.5 shrink-0 text-gold" />
                   <span>
-                    {siteConfig.address.line1}
+                    {settings.address.line1}
                     <br />
-                    {siteConfig.address.line2}
+                    {settings.address.line2}
                   </span>
                 </a>
               </li>
@@ -88,7 +88,7 @@ export function SiteFooter() {
               Book Direct
             </h3>
             <p className="mt-5 text-sm leading-relaxed text-ivory-dim">
-              Save {siteConfig.directBookingDiscount}% when you book your stay directly
+              Save {settings.directBookingDiscount}% when you book your stay directly
               with us, guaranteed.
             </p>
             <Link
@@ -104,7 +104,7 @@ export function SiteFooter() {
 
         <div className="flex flex-col items-center justify-between gap-4 text-center text-[11px] uppercase tracking-[0.14em] text-ivory-dim/60 sm:flex-row sm:text-left">
           <p>
-            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+            &copy; {new Date().getFullYear()} {settings.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
             <Link
@@ -115,7 +115,7 @@ export function SiteFooter() {
             </Link>
             <CookieSettingsButton />
           </div>
-          <p>{siteConfig.address.line1}, {siteConfig.address.line2}</p>
+          <p>{settings.address.line1}, {settings.address.line2}</p>
         </div>
       </div>
     </footer>

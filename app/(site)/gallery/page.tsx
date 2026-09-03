@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/site/page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/structured-data";
+import { getGallery } from "@/sanity/lib/data";
 import { GalleryClient } from "./gallery-client";
 
 export const metadata: Metadata = {
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/gallery" },
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const images = await getGallery();
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Gallery", path: "/gallery" }])} />
@@ -25,7 +27,7 @@ export default function GalleryPage() {
       />
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-10">
-        <GalleryClient />
+        <GalleryClient images={images} />
       </section>
     </>
   );

@@ -10,7 +10,6 @@ import { CalendarDays, CheckCircle2, Loader2, PartyPopper } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { bookingSchema, type BookingFormInput } from "@/lib/booking-schema";
-import { roomTypes } from "@/lib/rooms";
 import { siteConfig } from "@/lib/site-config";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -203,10 +202,10 @@ function StayDatesField({ form }: { form: UseFormReturn<BookingFormInput> }) {
   );
 }
 
-export function BookingForm() {
+export function BookingForm({ rooms }: { rooms: { slug: string; name: string }[] }) {
   const searchParams = useSearchParams();
   const roomParam = searchParams.get("room");
-  const validRoom = roomTypes.some((r) => r.slug === roomParam) ? roomParam! : "unsure";
+  const validRoom = rooms.some((r) => r.slug === roomParam) ? roomParam! : "unsure";
 
   const [submitted, setSubmitted] = React.useState(false);
 
@@ -399,7 +398,7 @@ export function BookingForm() {
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="unsure">Not sure — please recommend</SelectItem>
-                      {roomTypes.map((room) => (
+                      {rooms.map((room) => (
                         <SelectItem key={room.slug} value={room.slug}>
                           {room.name}
                         </SelectItem>
